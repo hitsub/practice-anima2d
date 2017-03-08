@@ -11,7 +11,8 @@ public class Follow : MonoBehaviour
 	{
 		if(target)
 		{
-			transform.position = target.position + offset;
+			//transform.position = target.position + offset;
+			transform.position = new Vector3 (target.transform.position.x, 4f, -10f);
 		}
 	}
 }
