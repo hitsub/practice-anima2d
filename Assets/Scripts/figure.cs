@@ -44,7 +44,7 @@ public class figure : MonoBehaviour {
 		//ジャンプ
 		if (Input.GetKeyDown (KeyCode.Space) && (animator.GetBool ("isWalk") || animator.GetBool ("isRun")) && animator.GetBool("isGround")) {
 			animator.SetTrigger ("Jump");
-			v.y = 7f;
+			v.y = 10f;
 		}
 
 		/* 速度設定 */
@@ -53,19 +53,11 @@ public class figure : MonoBehaviour {
 
 	}
 
-	/*
-	void OnCollisionEnter2D (Collision2D c){
-		if (c.gameObject.name == "ground") 
-			animator.SetBool ("isGround", true);
-	}
-	void OnCollisionExit2D (Collision2D c){
-		if (c.gameObject.name == "ground")
-			animator.SetBool ("isGround", false);
-	}
-	*/
 	void OnTriggerEnter2D (Collider2D c){
 		if (c.gameObject.name == "ground") 
 			animator.SetBool ("isGround", true);
+		if (c.gameObject.tag == "Enemy") 
+			c.gameObject.GetComponent<Animator> ().SetTrigger ("Crush");
 	}
 	void OnTriggerStay2D (Collider2D c){
 		if (c.gameObject.name == "ground") 
