@@ -13,10 +13,16 @@ public class enemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rigid.velocity = new Vector2 (-2f, 0);
+		rigid.velocity = new Vector2 (-2f, rigid.velocity.y);
 	}
 
 	void Crushed(){
 		Destroy (this.gameObject);
+	}
+
+	void OnTriggerExit2D(Collider2D c){
+		if (c.gameObject.name == "EnemyArea") {
+			Destroy (this.gameObject);
+		}
 	}
 }

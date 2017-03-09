@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: ef0a283ab9883419f8e9dd6495556f57
+timeCreated: 1489030832
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: YojoFont
+  fontNames:
+  - YojoFont
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
