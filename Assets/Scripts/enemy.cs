@@ -1,16 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour {
 
-	// Use this for initialization
+	Rigidbody2D rigid;
+	public float speed;
+
 	void Start () {
-		
+		rigid = GetComponent<Rigidbody2D> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		
+		rigid.velocity = new Vector2 (-1 * speed, rigid.velocity.y);
+	}
+
+	void Crushed(){
+		//Crushアニメーション内で呼ばれる
+		Destroy (this.gameObject);
+	}
+
+	void OnTriggerExit2D(Collider2D c){
+		//場外に出たら消滅
+		if (c.gameObject.name == "EnemyArea") {
+			Destroy (this.gameObject);
+		}
 	}
 }

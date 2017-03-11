@@ -1,26 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Figure : MonoBehaviour {
 
 	public Animator animator;
 	public Manager manager;
+	public float jumpPower;
+	public float stompPower;
 
-	float vel, vy;
 	Rigidbody2D rigid;
-	float isRight = 1f;
-	bool jump = false;
-	Vector2	v;
+	Vector2	v; //速度
 
-	// Use this for initialization
 	void Start () {
-		rigid = this.GetComponent<Rigidbody2D> ();
+		rigid = this.gameObject.GetComponent<Rigidbody2D> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		if (animator.GetBool ("isEnd"))
+		if (animator.GetBool ("isEnd")) //ゲームオーバー時キャラを動かせないように
 			return;
 
 		v = rigid.velocity;
@@ -47,10 +42,10 @@ public class Figure : MonoBehaviour {
 			animator.SetBool ("isRun", false);
 		}
 
-		//ジャンプ
+		/* ジャンプ */
 		if (Input.GetKeyDown (KeyCode.Space) && (animator.GetBool ("isWalk") || animator.GetBool ("isRun")) && animator.GetBool("isGround")) {
 			animator.SetTrigger ("Jump");
-			v.y = 10f;
+			v.y = jumpPower;
 		}
 
 		/* 速度設定 */
@@ -64,7 +59,7 @@ public class Figure : MonoBehaviour {
 		if (c.gameObject.name == "Ground") 
 			animator.SetBool ("isGround", true);
 
-		//敵接触処理
+		/* 敵接触処理 */
 		if (c.gameObject.tag == "Enemy") {
 			//敵のトリガエリア削除
 			Destroy (c.gameObject.GetComponent<PolygonCollider2D> ());
@@ -73,12 +68,12 @@ public class Figure : MonoBehaviour {
 			c.gameObject.GetComponent<Animator> ().SetTrigger ("Crush");
 
 			//連続ジャンプ
-			v.y = 10f;
+			v.y = jumpPower;
 			rigid.velocity = v;
 
 			//接触時敵を押し下げる
 			Vector3 enemyPos = c.gameObject.transform.position;
-			c.gameObject.transform.position = new Vector3 (enemyPos.x, enemyPos.y - 0.35f, enemyPos.z);
+			c.gameObject.transform.position = new Vector3 (enemyPos.x, enemyPos.y - stompPower, enemyPos.z);
 
 			//残り時間の追加
 			manager.AddTime ();
@@ -89,18 +84,19 @@ public class Figure : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D (Collider2D c){
-		//接地判定
-		if (c.gameObject.name == "ground") 
+		//接地判定(念のため)
+		if (c.gameObject.name == "Ground") 
 			animator.SetBool ("isGround", true);
 	}
 
 	void OnTriggerExit2D (Collider2D c){
 		//接地判定
-		if (c.gameObject.name == "ground")
+		if (c.gameObject.name == "Ground")
 			animator.SetBool ("isGround", false);
 	}
 
 	void End(){
+		//ゲームオーバー時
 		rigid.simulated = false;
 	}
 }
