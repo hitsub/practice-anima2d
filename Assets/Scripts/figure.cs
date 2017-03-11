@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class figure : MonoBehaviour {
+public class Figure : MonoBehaviour {
 
 	public Animator animator;
 	public Manager manager;
@@ -61,7 +61,7 @@ public class figure : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D c){
 		//接地判定
-		if (c.gameObject.name == "ground") 
+		if (c.gameObject.name == "Ground") 
 			animator.SetBool ("isGround", true);
 
 		//敵接触処理
